@@ -32,6 +32,12 @@ def usd_btc_rate():
     params = {'apikey' : get_creds(), 'time' : last_week()}
     last_week_rates = requests.get(US_BTC, params=params).json()
     print(f"Exchange rate of Bitcoin in USD on {last_week()}:   ${last_week_rates['rate']}") 
+    
+    #Pull five years exchange rate
+    params = {'apikey' : get_creds(), 'time' : five_years()}
+    year_rates = requests.get(US_BTC, params=params).json()
+    print(f"Exchange rate of Bitcoin in USD on {five_years()}:   ${year_rates['rate']}")
+
     return
 
 def last_week():
@@ -40,10 +46,17 @@ def last_week():
     week_ago = str(week_ago)
     return week_ago
 
+def five_years():
+    today = datetime.date.today()
+    years_ago = today - datetime.timedelta(days=5*365)
+    years_ago = str(years_ago)
+    return years_ago
+
 def main():
 
         
     usd_btc_rate()
+    print("Wow, wish I would have invested years ago!")
 
 if __name__ == "__main__":
     main()
